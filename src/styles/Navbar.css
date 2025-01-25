@@ -1,0 +1,97 @@
+/* General Navbar Styles */
+.navbar {
+  display: flex;
+  justify-content: space-between; /* This will create space between the left and right parts */
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: powderblue; /* Green background color */
+  color: black; /* Black text color */
+  font-size: 16px;
+}
+
+.leftSide {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: red;
+}
+
+.navbar-logo i {
+  font-size: 24px; /* Icon size */
+  margin-right: 8px;
+  color: red;
+}
+
+.rightSide {
+  display: flex;
+  gap: 20px; /* Space between links */
+}
+
+.rightSide a {
+  text-decoration: none;
+  color: black; /* Black text color */
+  font-size: 16px;
+  font-weight: normal;
+  display: flex;
+  align-items: center;  /* Align the icon and text */
+}
+
+.rightSide a i {
+  margin-right: 8px;  /* Space between icon and text */
+  color: blue;
+}
+
+.rightSide a:hover {
+  text-decoration: underline;
+  color: blue;
+}
+
+/* Button for toggling the menu (on mobile) */
+.menu-toggle {
+  display: none; /* Hide by default */
+  background-color: transparent;
+  border: none;
+  color: black;
+  font-size: 24px;
+}
+
+/* Mobile view styles */
+@media (max-width: 768px) {
+  .navbar {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .rightSide {
+      display: none; /* Hide the right side links by default */
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      text-align: center;
+  }
+
+  .rightSide.open {
+      display: flex; /* Show the menu when toggled */
+  }
+
+  .menu-toggle {
+      display: block; /* Show the menu toggle button */
+  }
+
+  .leftSide, .rightSide {
+      width: 100%;
+      text-align: center;
+  }
+
+  /* Change the layout of the logo and the menu items */
+  .navbar-logo {
+      font-size: 24px;
+      margin-bottom: 10px;
+  }
+}

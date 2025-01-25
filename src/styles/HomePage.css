@@ -1,0 +1,85 @@
+.homepage {
+  padding: 20px;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.welcome-text {
+  font-size: 3rem;
+  color: #28a745; /* Keep the main text color green */
+  animation: fadeInUp 1s ease-out; /* Apply fade-in and slide-up animation */
+}
+
+/* Image grid */
+.image-grid {
+  display: flex; /* Use flexbox to align items in a row */
+  flex-direction: row; /* Align images horizontally */
+  justify-content: center; /* Center the images horizontally */
+  gap: 20px; /* Space between images */
+  margin-top: 20px; /* Add top margin for spacing */
+}
+
+/* Style for images */
+.image-item img {
+  width: 200px;  /* Adjust the width of images */
+  height: 200px; /* Set a fixed height for equal-sized images */
+  object-fit: cover; /* Ensures the images cover the set width and height without distortion */
+  border-radius: 8px;
+  display: block; /* Ensure images are block elements */
+  animation: rotateImage 4s infinite linear; /* Apply image rotation animation */
+}
+
+/* Slogan section */
+.slogan {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #555;
+  margin-top: 20px; /* Place it at the bottom of the image section */
+  animation: glowingText 2s ease-in-out infinite; /* Apply glowing effect animation */
+}
+
+.glow-text {
+  color: #ff0000; /* Red color for the glow effect */
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.8); /* Glowing red shadow */
+}
+
+/* Add text animation for the welcome text */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Glowing effect animation for the slogan with red color */
+@keyframes glowingText {
+  0% {
+    text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 15px #ff0000, 0 0 20px #ff0000;
+  }
+  50% {
+    text-shadow: 0 0 10px #ff0000, 0 0 15px #ff0000, 0 0 25px #ff0000, 0 0 35px #ff0000;
+  }
+  100% {
+    text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 15px #ff0000, 0 0 20px #ff0000;
+  }
+}
+
+/* Slight image rotation effect (5% rotation) */
+@keyframes rotateImage {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(5deg); /* Rotate slightly (5 degrees) */
+  }
+  100% {
+    transform: rotate(0deg); /* Return to original position */
+  }
+}
