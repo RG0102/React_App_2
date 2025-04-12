@@ -1,0 +1,87 @@
+/* Full page container with a clean background and subtle grid lines */
+.dashboard-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #ebedee;
+  padding: 20px;
+  overflow: hidden;
+}
+
+/* Pseudo-element for subtle grid lines in the background */
+.dashboard-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background-image: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.01) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  z-index: -1;
+}
+
+/* Title styling for the welcome text */
+.dashboard-title {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  animation: fadeIn 0.8s forwards;
+  color: #333;
+}
+
+/* Container for buttons arranged horizontally */
+.dashboard-button-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Button styling with smooth transitions and effects */
+.dashboard-button {
+  padding: 15px 30px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Fade-in animation for the welcome text */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dashboard-button-container {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}

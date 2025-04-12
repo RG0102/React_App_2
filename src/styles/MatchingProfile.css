@@ -1,0 +1,52 @@
+.matching-profile-container {
+    display: flex; /* Use flexbox to arrange items */
+    flex-direction: column; /* Arrange items in a column */
+    align-items: center; /* Center items horizontally */
+    padding: 20px; /* Add some padding around the container */
+}
+
+.matching-profile-title {
+    margin-bottom: 20px; /* Space below the title */
+    font-size: 24px; /* Title font size */
+    font-weight: bold; /* Make title bold */
+}
+
+.profile-card-container {
+    display: flex; /* Use flexbox for profile cards */
+    flex-direction: row; /* Arrange cards in a row */
+    justify-content: center; /* Center the cards horizontally in the container */
+    flex-wrap: wrap; /* Allow wrapping of cards if they overflow */
+}
+
+.profile-card {
+    background-color: #f9f9f9; /* Card background color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Add a shadow */
+    margin: 10px; /* Add margin for gap between cards */
+    padding: 15px; /* Padding inside the card */
+    width: 250px; /* Set a width for the card */
+    text-align: center; /* Center text inside the card */
+}
+
+.profile-card-header {
+    margin-bottom: 10px; /* Space below the header */
+}
+
+.profile-card-image {
+    width: 100px; /* Set image width */
+    height: 100px; /* Set image height */
+    border-radius: 50%; /* Make the image circular */
+}
+
+.chat-button {
+    background-color: #007bff; /* Button background color */
+    color: white; /* Button text color */
+    border: none; /* No border */
+    padding: 10px 15px; /* Padding inside the button */
+    border-radius: 5px; /* Rounded button corners */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+.chat-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

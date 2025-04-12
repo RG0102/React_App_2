@@ -1,28 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { auth, db, storage } from "../firebase"; // Ensure storage is exported from your firebase config
+import { useNavigate } from "react-router-dom";
+import { auth, db, storage } from "../firebase";
 import {
   collection,
-  addDoc,
   query,
   orderBy,
   onSnapshot,
+  addDoc,
   serverTimestamp,
   deleteDoc,
   doc,
-  getDocs,
   updateDoc,
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import useSpeechRecognition from "../hooks/useSpeechRecognition.js";
-import "../styles/Chat.css";  // Ensure the path is correct
+import "../styles/Chat.css";
 
-const Chat = () => {
-  const location = useLocation();
+const UserChat = () => {
   const navigate = useNavigate();
-  const { userId: otherUserId, userName: otherUserName } = location.state || {};
-
   const [currentUser, setCurrentUser] = useState(null);
+  // The chat room ID is determined solely by the logged‐in user’s UID.
   const [chatId, setChatId] = useState("");
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -35,34 +32,35 @@ const Chat = () => {
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
 
+  // Use speech recognition for navigation commands (e.g., "back").
   const handleCommand = (command) => {
-    if (command.includes("back") || command.includes("go back")) {
-      navigate("/MatchedUsers");
+    if (command.toLowerCase().includes("back") || command.toLowerCase().includes("go back")) {
+      navigate("/help");
     }
   };
   useSpeechRecognition(handleCommand);
 
+  // Listen for the authenticated user.
   useEffect(() => {
     const unsubscribeAuth = auth.onAuthStateChanged((user) => {
       if (user) {
-        console.log("Authenticated user:", user.uid);
         setCurrentUser(user);
       } else {
-        console.error("No authenticated user found");
         alert("You are not authenticated!");
+        navigate("/login");
       }
     });
     return () => unsubscribeAuth();
-  }, []);
+  }, [navigate]);
 
+  // Once the user is loaded, set the chat room ID using their UID.
   useEffect(() => {
-    if (currentUser && otherUserId) {
-      const generatedChatId = [currentUser.uid, otherUserId].sort().join("_");
-      console.log("Setting chatId:", generatedChatId);
-      setChatId(generatedChatId);
+    if (currentUser) {
+      setChatId("volchat_" + currentUser.uid);
     }
-  }, [currentUser, otherUserId]);
+  }, [currentUser]);
 
+  // Listen for messages in the chat room.
   useEffect(() => {
     if (!chatId) return;
     const messagesRef = collection(db, "chats", chatId, "messages");
@@ -71,10 +69,7 @@ const Chat = () => {
       q,
       (snapshot) => {
         const msgs = [];
-        snapshot.forEach((doc) => {
-          msgs.push({ id: doc.id, ...doc.data() });
-        });
-        console.log("Fetched messages:", msgs);
+        snapshot.forEach((doc) => msgs.push({ id: doc.id, ...doc.data() }));
         setMessages(msgs);
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
       },
@@ -86,37 +81,28 @@ const Chat = () => {
     return () => unsubscribe();
   }, [chatId]);
 
+  // Send a new message. If an image is attached, upload it first.
   const handleSendMessage = async () => {
-    if (!newMessage.trim() && !newImage) {
-      console.log("No message text or image to send");
-      return;
-    }
-    if (!chatId || !currentUser) {
-      console.error("Missing chatId or currentUser");
-      return;
-    }
+    if (!newMessage.trim() && !newImage) return;
+    if (!chatId || !currentUser) return;
     const messagesRef = collection(db, "chats", chatId, "messages");
     try {
       let imageUrl = "";
       if (newImage) {
-        console.log("Uploading image:", newImage.name);
         const imageRef = ref(
           storage,
           `chatImages/${chatId}/${Date.now()}_${newImage.name}`
         );
         const snapshot = await uploadBytes(imageRef, newImage);
-        console.log("Image upload snapshot:", snapshot);
         imageUrl = await getDownloadURL(snapshot.ref);
-        console.log("Retrieved image URL:", imageUrl);
       }
       await addDoc(messagesRef, {
         text: newMessage,
-        imageUrl, // will be empty if no image
+        imageUrl,
         senderId: currentUser.uid,
-        senderName: currentUser.displayName,
+        senderName: currentUser.displayName || currentUser.email,
         timestamp: serverTimestamp(),
       });
-      console.log("Message sent successfully");
       setNewMessage("");
       setNewImage(null);
       if (fileInputRef.current) fileInputRef.current.value = null;
@@ -126,52 +112,22 @@ const Chat = () => {
     }
   };
 
-  const handleImageSend = async (file) => {
-    if (!file || !chatId || !currentUser) {
-      console.error("Missing file, chatId, or currentUser");
-      return;
-    }
-    try {
-      console.log("Uploading image via handleImageSend:", file.name);
-      const imageRef = ref(
-        storage,
-        `chatImages/${chatId}/${Date.now()}_${file.name}`
-      );
-      const snapshot = await uploadBytes(imageRef, file);
-      console.log("Image upload snapshot:", snapshot);
-      const imageUrl = await getDownloadURL(snapshot.ref);
-      console.log("Retrieved image URL:", imageUrl);
-      const messagesRef = collection(db, "chats", chatId, "messages");
-      await addDoc(messagesRef, {
-        text: newMessage, // you can also clear newMessage if you want to send image-only messages
-        imageUrl,
-        senderId: currentUser.uid,
-        timestamp: serverTimestamp(),
-      });
-      console.log("Image message sent successfully");
-      setNewMessage("");
-    } catch (error) {
-      console.error("Error sending image:", error);
-      alert("Error sending image: " + error.message);
-    }
-  };
-
+  // Delete a message.
   const handleDeleteMessage = async (msgId) => {
     try {
       await deleteDoc(doc(db, "chats", chatId, "messages", msgId));
-      console.log("Message deleted:", msgId);
     } catch (error) {
       console.error("Error deleting message:", error);
       alert("Error deleting message: " + error.message);
     }
   };
 
+  // Edit a message.
   const handleEditMessage = async (msgId) => {
     try {
       await updateDoc(doc(db, "chats", chatId, "messages", msgId), {
         text: editingText,
       });
-      console.log("Message edited:", msgId);
       setEditingMessageId(null);
       setEditingText("");
     } catch (error) {
@@ -182,18 +138,9 @@ const Chat = () => {
 
   const emojis = ["😀", "😂", "😍", "👍", "🙏", "😎", "🤔", "🎉", "🥳", "😇"];
 
-  if (!otherUserId) {
-    return (
-      <div style={{ padding: "20px", textAlign: "center" }}>
-        <p>Error: Missing chat data. Please return to the matched users page.</p>
-        <button onClick={() => navigate("/matchedusers")}>Go Back</button>
-      </div>
-    );
-  }
-
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", padding: "20px" }}>
-      <h2>Chat with {otherUserName}</h2>
+      <h2>Chat with a Volunteer</h2>
       <div style={{ flex: 1, overflowY: "auto", border: "1px solid #ccc", padding: "10px", marginBottom: "10px" }}>
         {messages.map((msg) => (
           <div
@@ -226,15 +173,17 @@ const Chat = () => {
                     style={{ width: "80%" }}
                   />
                   <button onClick={() => handleEditMessage(msg.id)}>Save</button>
-                  <button onClick={() => { setEditingMessageId(null); setEditingText(""); }}>
-                    Cancel
-                  </button>
+                  <button onClick={() => { setEditingMessageId(null); setEditingText(""); }}>Cancel</button>
                 </>
               ) : (
                 <>
                   {msg.text && <div>{msg.text}</div>}
                   {msg.imageUrl && (
-                    <img src={msg.imageUrl} alt="sent" style={{ maxWidth: "200px", maxHeight: "200px", marginTop: "5px" }} />
+                    <img
+                      src={msg.imageUrl}
+                      alt="sent"
+                      style={{ maxWidth: "200px", maxHeight: "200px", marginTop: "5px" }}
+                    />
                   )}
                 </>
               )}
@@ -297,9 +246,7 @@ const Chat = () => {
           style={{ display: "none" }}
           onChange={(e) => {
             if (e.target.files && e.target.files[0]) {
-              console.log("File selected:", e.target.files[0].name);
-              // Call handleImageSend with the selected file
-              handleImageSend(e.target.files[0]);
+              setNewImage(e.target.files[0]);
             }
           }}
         />
@@ -324,4 +271,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default UserChat;

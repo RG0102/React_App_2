@@ -4,12 +4,18 @@ export const Container = styled.div`
 background-color: #fff;
 border-radius: 10px;
 box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-position: relative;
+position: absolute;
+top: 42%;
+left: 50%;
+transform: translate(-50%, -50%);
 overflow: hidden;
-width: 678px;
-max-width: 100%;
-min-height: 500px;
-margin: 10px auto;
+width: 800px;
+max-width: 85%;
+min-height: 600px;
+margin: 80px auto;
+display: flex;
+align-items: center;
+justify-content: center;
 `;
 
 export const SignUpContainer = styled.div`
@@ -28,7 +34,6 @@ export const SignUpContainer = styled.div`
  ` 
  : null}
 `;
-
 
 export const SignInContainer = styled.div`
 position: absolute;
@@ -65,15 +70,14 @@ margin: 8px 0;
 width: 100%;
 `;
 
-
 export const Button = styled.button`
    border-radius: 20px;
    border: 1px solid #ff4b2b;
    background-color: #ff4b2b;
    color: #ffffff;
-   font-size: 12px;
+   font-size: 14px;
    font-weight: bold;
-   padding: 12px 45px;
+   padding: 15px 50px;
    letter-spacing: 1px;
    text-transform: uppercase;
    transition: transform 80ms ease-in;
@@ -172,4 +176,32 @@ export const RecoveryForm = styled.div`
   width: 400px;
   margin: 50px auto;
   text-align: center;
+`;
+
+export const PrivacyContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+`;
+
+export const Checkbox = styled.input`
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+`;
+
+export const Label = styled.label`
+   font-size: 14px;
+    color: #555;
+    cursor: pointer;
+
+    a {
+        color: #007BFF;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }  
 `;

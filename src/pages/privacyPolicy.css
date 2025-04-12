@@ -1,0 +1,29 @@
+/* Center the page content */
+.privacy-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4; /* Optional: background color */
+  }
+  
+  .privacy-content {
+    width: 80%;
+    max-width: 800px; /* Set a max width for the content */
+    text-align: center; /* Center the text */
+    background-color: #fff; /* Optional: white background for content */
+    padding: 20px;
+    border-radius: 8px; /* Optional: rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Optional: box shadow */
+  }
+  
+  /* Style the links */
+  a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  

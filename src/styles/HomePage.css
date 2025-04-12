@@ -1,5 +1,6 @@
 .homepage {
-  padding: 20px;
+  padding: 100px;
+  overflow: hidden; /* Prevent overflow of content */
 }
 
 .hero {
@@ -8,7 +9,7 @@
 }
 
 .welcome-text {
-  font-size: 3rem;
+  font-size: 4rem;
   color: #28a745; /* Keep the main text color green */
   animation: fadeInUp 1s ease-out; /* Apply fade-in and slide-up animation */
 }
@@ -19,12 +20,12 @@
   flex-direction: row; /* Align images horizontally */
   justify-content: center; /* Center the images horizontally */
   gap: 20px; /* Space between images */
-  margin-top: 20px; /* Add top margin for spacing */
+  margin-top: 60px; /* Add top margin for spacing */
 }
 
 /* Style for images */
 .image-item img {
-  width: 200px;  /* Adjust the width of images */
+  width: 200px; /* Adjust the width of images */
   height: 200px; /* Set a fixed height for equal-sized images */
   object-fit: cover; /* Ensures the images cover the set width and height without distortion */
   border-radius: 8px;
@@ -35,9 +36,9 @@
 /* Slogan section */
 .slogan {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   color: #555;
-  margin-top: 20px; /* Place it at the bottom of the image section */
+  margin-top: 35px; /* Place it at the bottom of the image section */
   animation: glowingText 2s ease-in-out infinite; /* Apply glowing effect animation */
 }
 
@@ -61,13 +62,16 @@
 /* Glowing effect animation for the slogan with red color */
 @keyframes glowingText {
   0% {
-    text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 15px #ff0000, 0 0 20px #ff0000;
+    text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 15px #ff0000,
+      0 0 20px #ff0000;
   }
   50% {
-    text-shadow: 0 0 10px #ff0000, 0 0 15px #ff0000, 0 0 25px #ff0000, 0 0 35px #ff0000;
+    text-shadow: 0 0 10px #ff0000, 0 0 15px #ff0000, 0 0 25px #ff0000,
+      0 0 35px #ff0000;
   }
   100% {
-    text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 15px #ff0000, 0 0 20px #ff0000;
+    text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 15px #ff0000,
+      0 0 20px #ff0000;
   }
 }
 
@@ -82,4 +86,33 @@
   100% {
     transform: rotate(0deg); /* Return to original position */
   }
+}
+
+.flag-dropdown {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.flag-img {
+  width: 40px; /* Set the desired width for the flags */
+  height: 30px; /* Adjust the height to maintain aspect ratio */
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Smooth scaling effect */
+}
+
+.flag-img:hover {
+  transform: scale(1.1); /* Slightly enlarge the flag on hover */
+}
+
+.body {
+  background-color: #f0f0f0; /* Light gray background for the body */
+  font-family: Arial, sans-serif; /* Use a clean sans-serif font */
+  color: #333; /* Dark gray text color for better readability */
+  line-height: 1.6; /* Increase line height for better readability */
+  padding: 20px; /* Add padding around the content */
+  overflow: hidden; /* Prevent overflow of content */
 }

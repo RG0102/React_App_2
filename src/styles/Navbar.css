@@ -1,12 +1,20 @@
 /* General Navbar Styles */
 .navbar {
   display: flex;
-  justify-content: space-between; /* This will create space between the left and right parts */
+  justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background-color: powderblue; /* Green background color */
-  color: black; /* Black text color */
+  height: 50px; /* fixed slim height */
+  padding: 0 3rem; /* horizontal padding only */
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(62, 232, 255, 0.4),
+    rgba(69, 224, 230, 0.2) 20px,
+    rgba(150, 216, 230, 0.2) 20px,
+    rgba(150, 216, 230, 0.2) 20px
+  );
+  color: black;
   font-size: 16px;
+  overflow: hidden; /* Prevent overflow of content */
 }
 
 .leftSide {
@@ -14,12 +22,14 @@
   align-items: center;
 }
 
+/* Shift the logo upward by 5px */
 .navbar-logo {
   display: flex;
   align-items: center;
   font-weight: bold;
   font-size: 18px;
   color: red;
+  margin-top: -5px;
 }
 
 .navbar-logo i {
@@ -30,26 +40,37 @@
 
 .rightSide {
   display: flex;
-  gap: 20px; /* Space between links */
+  gap: 20px; /* space between links */
+  padding-right: 1rem; /* extra padding on the right side */
 }
 
+/* Shift the buttons upward by 5px */
 .rightSide a {
   text-decoration: none;
-  color: black; /* Black text color */
-  font-size: 16px;
+  color: black;
+  font-size: 18px; /* slightly bigger font size */
   font-weight: normal;
   display: flex;
-  align-items: center;  /* Align the icon and text */
+  align-items: center; /* align icon and text */
+  padding: 0.5rem 1rem; /* button-like padding */
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+  border-radius: 4px;
+  margin-top: -5px;
 }
 
 .rightSide a i {
-  margin-right: 8px;  /* Space between icon and text */
+  margin-right: 8px; /* space between icon and text */
   color: blue;
 }
 
 .rightSide a:hover {
-  text-decoration: underline;
   color: blue;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.rightSide a:active {
+  transform: scale(0.98);
 }
 
 /* Button for toggling the menu (on mobile) */
@@ -64,34 +85,35 @@
 /* Mobile view styles */
 @media (max-width: 768px) {
   .navbar {
-      flex-direction: column;
-      align-items: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .rightSide {
-      display: none; /* Hide the right side links by default */
-      flex-direction: column;
-      gap: 10px;
-      width: 100%;
-      text-align: center;
+    display: none; /* Hide the right side links by default */
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    text-align: center;
+    padding-right: 0;
   }
 
   .rightSide.open {
-      display: flex; /* Show the menu when toggled */
+    display: flex; /* Show the menu when toggled */
   }
 
   .menu-toggle {
-      display: block; /* Show the menu toggle button */
+    display: block; /* Show the menu toggle button */
   }
 
-  .leftSide, .rightSide {
-      width: 100%;
-      text-align: center;
+  .leftSide,
+  .rightSide {
+    width: 100%;
+    text-align: center;
   }
 
-  /* Change the layout of the logo and the menu items */
   .navbar-logo {
-      font-size: 24px;
-      margin-bottom: 10px;
+    font-size: 24px;
+    margin-bottom: 10px;
   }
 }

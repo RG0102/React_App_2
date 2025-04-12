@@ -25,8 +25,8 @@ function Navbar() {
                 <Link to="/">
                     <i className="bx bxs-home"></i> Home
                 </Link>
-                <Link to="/user">
-                    <i className="bx bxs-user"></i> User
+                <Link to="/dashboard">
+                    <i className=""></i> Dashboard
                 </Link>
                 <Link to="/volunteerlogin">
                     <i className="bx bxs-user"></i> Volunteer
